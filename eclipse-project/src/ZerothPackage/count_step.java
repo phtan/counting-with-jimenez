@@ -1,6 +1,6 @@
 package ZerothPackage;
 
-public class count_step {
+public class CountStep {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

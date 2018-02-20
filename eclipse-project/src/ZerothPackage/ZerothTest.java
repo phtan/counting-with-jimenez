@@ -8,7 +8,8 @@ class ZerothTest {
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+		CountStep c = new CountStep();
+		String[] g = c.getGroundTruth();
 	}
 
 }
