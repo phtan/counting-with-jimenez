@@ -43,6 +43,12 @@ public class CountStep {
 			throw new Exception("groundTruth should not be null but it is");
 		}
 	}
+	
+	public Double calculateMagnitude(Double x, Double y, Double z) {
+		Double result = 0.0;
+		
+		return result;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
