@@ -56,4 +56,11 @@ class ZerothTest {
 		Double expectedVariance = 3.741657386773941;
 		assertEquals(expectedVariance, actualVariance, 0.01);
 	}
+	
+	@Test
+	public void testLocalMeanArithmetic() {
+		c.setWindowSize(2);
+		Double actualMean = c.calculateLocalMean(0);
+		fail("Not implemented yet");
+	}
 }

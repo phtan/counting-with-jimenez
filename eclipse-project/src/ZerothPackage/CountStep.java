@@ -8,9 +8,14 @@ import java.util.ArrayList;
 public class CountStep {
 	
 	private ArrayList<ArrayList<Double>> groundTruth;
+	private int windowSize;
+	
+	private final int DEFAULT_WINDOW_SIZE = 15;
 	
 
 	public CountStep(String dir) throws Exception {
+		
+		windowSize = DEFAULT_WINDOW_SIZE;
 		
 		groundTruth = new ArrayList<ArrayList<Double>>();
 		BufferedReader br = null;
@@ -36,6 +41,11 @@ public class CountStep {
 		br.close();
 	}
 	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
 	public ArrayList<ArrayList<Double>> getGroundTruth() throws Exception {
 		if (groundTruth != null) {
 			return groundTruth;
@@ -53,9 +63,16 @@ public class CountStep {
 		return result;
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 
+	public void setWindowSize(int i) {
+		windowSize = i;
+		
+	}
+
+	public Double calculateLocalMean(int centre) {
+
+		return null;
 	}
 
 }
