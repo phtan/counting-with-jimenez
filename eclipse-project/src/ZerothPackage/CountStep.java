@@ -46,7 +46,10 @@ public class CountStep {
 	
 	public Double calculateMagnitude(Double x, Double y, Double z) {
 		Double result = 0.0;
-		
+		Double xSquared = x * x;
+		Double ySquared = y * y;
+		Double zSquared = z * z;
+		result = Math.sqrt(xSquared + ySquared + zSquared);
 		return result;
 	}
 

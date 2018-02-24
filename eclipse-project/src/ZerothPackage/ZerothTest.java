@@ -3,7 +3,7 @@ package ZerothPackage;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -15,10 +15,11 @@ class ZerothTest {
 	private int expectedBeta = 1; // beta, that for the 'horizontal' axis;
 	private CountStep c;
 	
-	@Before
-	void setUp() {
+	@BeforeEach
+	public void setUp() {
 		try {
-			c = new CountStep(dirOfSampleCSV);
+			this.c = new CountStep(dirOfSampleCSV);
+	
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			fail(e1.getMessage());
@@ -26,7 +27,7 @@ class ZerothTest {
 	}
 	
 	@Test
-	void testReadOfCSV() {
+	public void testReadOfCSV() {
 		
 		
 		ArrayList<ArrayList<Double>> g;
@@ -36,6 +37,8 @@ class ZerothTest {
 			String actual = Double.toString(g.get(expectedAlpha).get(expectedBeta)); 
 			assertEquals(expected, actual);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			fail(e.getMessage());
 			
 		}
@@ -44,13 +47,13 @@ class ZerothTest {
 	}
 	
 	@Test
-	void testMagnitudeArithmetic() {
+	public void testMagnitudeArithmetic() {
 		Double sampleX = 1.0;
 		Double sampleY = 2.0;
 		Double sampleZ = 3.0;
 		Double actualVariance = c.calculateMagnitude(sampleX, sampleY, sampleZ);
+	
 		Double expectedVariance = 3.741657386773941;
 		assertEquals(expectedVariance, actualVariance, 0.01);
 	}
-
 }
