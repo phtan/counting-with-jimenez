@@ -87,11 +87,24 @@ class ZerothTest {
 		int expectedSizeOfList = 2;
 		assertEquals(expectedSizeOfList, c2.getLowerThresholds().size());
 		ArrayList<Integer> expectedIndicesOfLowerThresholds = new ArrayList<>();
-		fail("haven't computed the expected places where the lower thresholds are");
+		int expectedIndexNumberOne = 0;
+		expectedIndicesOfLowerThresholds.add(expectedIndexNumberOne);
+		int expectedIndexNumberTwo = 1;
+		expectedIndicesOfLowerThresholds.add(expectedIndexNumberTwo);
 		Iterator<Integer> iter = expectedIndicesOfLowerThresholds.iterator();
 		while (iter.hasNext()) {
 			int index = iter.next();
-			assertEquals(givenLowerThreshold, c2.getLowerThresholds().get(index), 0.0);
+			// convert to string, since comparison between two Doubles that
+			// have the same value will throw a strange error:
+			// "AssertionFailedError: positive delta expected but was: <0.0>"
+			String expected = Double.toString(givenLowerThreshold);
+			String actual = Double.toString(c2.getLowerThresholds().get(index));
+			assertEquals(expected, actual);
 		}
+	}
+	
+	@Test
+	public void testUpperThreshold() {
+		fail("Not implemented yet.");
 	}
 }
