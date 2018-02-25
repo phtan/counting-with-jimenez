@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CountStep {
 	
@@ -55,6 +56,7 @@ public class CountStep {
 	}
 	
 	public Double calculateMagnitude(Double x, Double y, Double z) {
+		
 		Double result = 0.0;
 		Double xSquared = x * x;
 		Double ySquared = y * y;
@@ -72,7 +74,38 @@ public class CountStep {
 
 	public Double calculateLocalMean(int centre) {
 
-		return null;
+		/*
+		 * sum = 0;
+		 * divisors = 2w - 1; // w is size of the averaging window
+		 * looping from (centre - window) to (centre + window)
+		 *     if (centre - window) < 0 // reached the first entry in list
+		 *          divisors--;
+		 *          continue to next iteration of loop;
+		 *     else
+		 *         v = list[centre-window]
+		 *         sum = addVToTheSum(v, sum);
+		 */
+		int divisorMinusOne = 2 * this.windowSize;
+		int divisor = divisorMinusOne + 1;
+		double sum = 0.0;
+		for (int k=centre-this.windowSize; k<=centre+this.windowSize; k++) {
+			if (k<0) {
+				divisor--;
+				continue;
+			} else {
+				ArrayList<Double> listForSampleK = this.groundTruth.get(k);
+				int xIndex = 0;
+				int yIndex = 1;
+				int zIndex = 2;
+				Double magnitude = this.calculateMagnitude(listForSampleK.get(xIndex),
+						listForSampleK.get(yIndex),
+						listForSampleK.get(zIndex));
+				sum += magnitude;
+			}
+		}
+		Double result;
+		result = sum / divisor;
+		return result;
 	}
 
 }

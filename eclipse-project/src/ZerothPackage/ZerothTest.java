@@ -61,6 +61,7 @@ class ZerothTest {
 	public void testLocalMeanArithmetic() {
 		c.setWindowSize(2);
 		Double actualMean = c.calculateLocalMean(0);
-		fail("Not implemented yet");
+		Double expectedMean = 9.759154917263177;
+		assertEquals(expectedMean, actualMean, 0.01);
 	}
 }
