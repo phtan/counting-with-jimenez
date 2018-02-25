@@ -71,7 +71,7 @@ public class CountStep {
 		windowSize = i;
 		
 	}
-
+	
 	public Double calculateLocalMean(int centre) {
 
 		/*

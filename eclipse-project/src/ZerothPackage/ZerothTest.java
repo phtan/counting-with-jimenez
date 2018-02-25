@@ -51,10 +51,10 @@ class ZerothTest {
 		Double sampleX = 1.0;
 		Double sampleY = 2.0;
 		Double sampleZ = 3.0;
-		Double actualVariance = c.calculateMagnitude(sampleX, sampleY, sampleZ);
+		Double actualMagnitude = c.calculateMagnitude(sampleX, sampleY, sampleZ);
 	
-		Double expectedVariance = 3.741657386773941;
-		assertEquals(expectedVariance, actualVariance, 0.01);
+		Double expectedMagnitude = 3.741657386773941;
+		assertEquals(expectedMagnitude, actualMagnitude, 0.01);
 	}
 	
 	@Test
@@ -63,5 +63,12 @@ class ZerothTest {
 		Double actualMean = c.calculateLocalMean(0);
 		Double expectedMean = 9.759154917263177;
 		assertEquals(expectedMean, actualMean, 0.01);
+	}
+	
+	@Test
+	public void testLocalVarianceArithmetic() {
+		c.setWindowSize(2);
+		int indexOfCentreOfAveragingWindow = 0;
+		Double actualVariance = c.calculateLocalVariance(indexOfCentreOfAveragingWindow);
 	}
 }
