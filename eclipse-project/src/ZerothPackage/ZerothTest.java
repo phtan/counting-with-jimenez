@@ -1,6 +1,8 @@
 package ZerothPackage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -72,6 +74,21 @@ class ZerothTest {
 		Double actualVariance = c.calculateLocalVariance(indexOfCentreOfAveragingWindow);
 		Double expectedVariance = 0.049429516536621;
 		assertEquals(expectedVariance, actualVariance, 0.01);
-		
+	}
+	
+	@Test
+	public void testLowerThreshold() {
+		c.setWindowSize(2);
+		int givenLowerThreshold = 1;
+		c.applyLowerThreshold(givenLowerThreshold);
+		int expectedSizeOfList = 6;
+		assertEquals(c.getLowerThresholds().length(), expectedSizeOfList);
+		ArrayList<Integer> expectedIndicesOfLowerThresholds = new ArrayList<>();
+		//TODO compute;
+		Iterator<Integer> iter = expectedIndicesOfLowerThresholds.iterator();
+		while (iter.hasNext()) {
+			int index = iter.next();
+			assertEquals(givenLowerThreshold, c.getLowerThresholds.get(index));
+		}
 	}
 }
