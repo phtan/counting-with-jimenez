@@ -108,4 +108,37 @@ public class CountStep {
 		return result;
 	}
 
+	public Double calculateLocalVariance(int indexOfCentreOfAveragingWindow) {
+		
+		int centre = indexOfCentreOfAveragingWindow;	
+		Double localMean = this.calculateLocalMean(centre);
+
+		
+		int divisorMinusOne = 2 * this.windowSize;
+		int divisor = divisorMinusOne + 1;
+		double sum = 0.0;
+		
+		for (int k=centre-this.windowSize; k<=centre+this.windowSize; k++) {
+			if (k<0) {
+				divisor--;
+				continue;
+			} else {
+				ArrayList<Double> listForSampleK = this.groundTruth.get(k);
+				int xIndex = 0;
+				int yIndex = 1;
+				int zIndex = 2;
+				Double magnitude = this.calculateMagnitude(listForSampleK.get(xIndex),
+						listForSampleK.get(yIndex),
+						listForSampleK.get(zIndex));
+				
+				double squareRootOfAddend = magnitude - localMean;
+				Double addend = squareRootOfAddend * squareRootOfAddend;
+				sum += addend;
+			}
+		}
+		Double result;
+		result = sum / divisor;
+		return result;
+	}
+
 }
