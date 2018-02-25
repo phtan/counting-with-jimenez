@@ -70,7 +70,7 @@ class ZerothTest {
 		c.setWindowSize(2);
 		int indexOfCentreOfAveragingWindow = 0;
 		Double actualVariance = c.calculateLocalVariance(indexOfCentreOfAveragingWindow);
-		Double expectedVariance = 99.99; // TODO calculate
+		Double expectedVariance = 0.049429516536621;
 		assertEquals(expectedVariance, actualVariance, 0.01);
 		
 	}
