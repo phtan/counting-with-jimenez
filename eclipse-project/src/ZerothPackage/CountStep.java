@@ -9,6 +9,7 @@ import java.util.Iterator;
 public class CountStep {
 	
 	private ArrayList<ArrayList<Double>> groundTruth;
+	private ArrayList<Double> withLowerThreshold;
 	private int windowSize;
 	
 	private final int DEFAULT_WINDOW_SIZE = 15;
@@ -19,6 +20,7 @@ public class CountStep {
 		windowSize = DEFAULT_WINDOW_SIZE;
 		
 		groundTruth = new ArrayList<ArrayList<Double>>();
+		withLowerThreshold = new ArrayList<Double>();
 		BufferedReader br = null;
 		String line = "";
 		String separator = ",";
@@ -89,10 +91,15 @@ public class CountStep {
 		int divisor = divisorMinusOne + 1;
 		double sum = 0.0;
 		for (int k=centre-this.windowSize; k<=centre+this.windowSize; k++) {
+			int maxIndex = this.groundTruth.size()-1;
 			if (k<0) {
 				divisor--;
 				continue;
-			} else {
+			} else if (k>maxIndex) {
+				divisor--;
+				continue;
+			}
+			else {
 				ArrayList<Double> listForSampleK = this.groundTruth.get(k);
 				int xIndex = 0;
 				int yIndex = 1;
@@ -119,7 +126,11 @@ public class CountStep {
 		double sum = 0.0;
 		
 		for (int k=centre-this.windowSize; k<=centre+this.windowSize; k++) {
+			int maxIndex = this.groundTruth.size()-1;
 			if (k<0) {
+				divisor--;
+				continue;
+			} else if(k>maxIndex) {
 				divisor--;
 				continue;
 			} else {
@@ -139,6 +150,26 @@ public class CountStep {
 		Double result;
 		result = sum / divisor;
 		return result;
+	}
+
+	public void applyLowerThreshold(Double givenLowerThreshold) {
+		Double variance;
+		Double squareRootOfVariance;
+		for (int k=0; k<this.groundTruth.size(); k++) {
+			variance = this.calculateLocalVariance(k);
+			squareRootOfVariance = Math.sqrt(variance);
+			if (squareRootOfVariance<givenLowerThreshold) {
+				this.withLowerThreshold.add(givenLowerThreshold);
+			} else {
+				this.withLowerThreshold.add(squareRootOfVariance);
+			}
+		}
+		
+	}
+
+	public ArrayList<Double> getLowerThresholds() {
+	
+		return withLowerThreshold;
 	}
 
 }

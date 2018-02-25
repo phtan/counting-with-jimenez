@@ -12,15 +12,18 @@ import org.junit.jupiter.api.Test;
 class ZerothTest {
 
 	private String dirOfSampleCSV = "C:\\Users\\pheng\\Documents\\cs4222 wireless networks\\CS4222-HW2\\sample-from-pdf.csv";
+	private String dir2 = "C:\\Users\\pheng\\Documents\\cs4222 wireless networks\\CS4222-HW2\\sample2.csv";
 	private Double expectedVal = 2.06;
 	private int expectedAlpha = 5; // alpha is label for the 'vertical' axis of the 2-d array
 	private int expectedBeta = 1; // beta, that for the 'horizontal' axis;
 	private CountStep c;
+	private CountStep c2;
 	
 	@BeforeEach
 	public void setUp() {
 		try {
 			this.c = new CountStep(dirOfSampleCSV);
+			this.c2 = new CountStep(dir2);
 	
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -78,17 +81,17 @@ class ZerothTest {
 	
 	@Test
 	public void testLowerThreshold() {
-		c.setWindowSize(2);
-		int givenLowerThreshold = 1;
-		c.applyLowerThreshold(givenLowerThreshold);
-		int expectedSizeOfList = 6;
-		assertEquals(c.getLowerThresholds().length(), expectedSizeOfList);
+		c2.setWindowSize(1);
+		Double givenLowerThreshold = 1.0;
+		c2.applyLowerThreshold(givenLowerThreshold);
+		int expectedSizeOfList = 2;
+		assertEquals(expectedSizeOfList, c2.getLowerThresholds().size());
 		ArrayList<Integer> expectedIndicesOfLowerThresholds = new ArrayList<>();
-		//TODO compute;
+		fail("haven't computed the expected places where the lower thresholds are");
 		Iterator<Integer> iter = expectedIndicesOfLowerThresholds.iterator();
 		while (iter.hasNext()) {
 			int index = iter.next();
-			assertEquals(givenLowerThreshold, c.getLowerThresholds.get(index));
+			assertEquals(givenLowerThreshold, c2.getLowerThresholds().get(index), 0.0);
 		}
 	}
 }
