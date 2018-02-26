@@ -80,10 +80,44 @@ class ZerothTest {
 	}
 	
 	@Test
+	public void itShallNotProceedIfVarianceIsNotComputed() {
+		Double arbitraryThreshold = 1.0;
+		String expectedErrorMessage = c.ERROR_VARIANCE_NOT_COMPUTED;
+		try {
+			c.applyLowerThreshold(arbitraryThreshold);
+		} catch (Exception e) {
+			assertEquals(expectedErrorMessage, e.getMessage());
+		}
+	}
+	
+	@Test
+	public void varianceShallNotBeComputedMoreThanOnce() {
+		boolean hasTried = false;
+		String expectedErrorMessage = c.ERROR_OVERCOMPUTING_VARIANCE;
+		try {
+			hasTried = true;
+			c.calculateSquareRootOfVariance();
+			c.calculateSquareRootOfVariance();
+		} catch (Exception e) {
+			assertEquals(expectedErrorMessage, e.getMessage());
+		}
+		if(!hasTried) {
+			fail("Expected execution to enter try-block but it did not.");
+		}
+		
+	}
+	
+	@Test
 	public void testLowerThreshold() {
 		c2.setWindowSize(1);
 		Double givenLowerThreshold = 1.0;
-		c2.applyLowerThreshold(givenLowerThreshold);
+		
+		try {
+			c2.calculateSquareRootOfVariance();
+			c2.applyLowerThreshold(givenLowerThreshold);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
 		int expectedSizeOfList = 2;
 		assertEquals(expectedSizeOfList, c2.getLowerThresholds().size());
 		ArrayList<Integer> expectedIndicesOfLowerThresholds = new ArrayList<>();

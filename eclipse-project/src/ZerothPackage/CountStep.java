@@ -4,23 +4,32 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CountStep {
 	
 	private ArrayList<ArrayList<Double>> groundTruth;
+	private ArrayList<Double> squareRootsOfVariance;
 	private ArrayList<Double> withLowerThreshold;
 	private int windowSize;
 	
+	private boolean haveCalculatedSquareRootOfVariance;
+	
 	private final int DEFAULT_WINDOW_SIZE = 15;
+	
+	public final String ERROR_VARIANCE_NOT_COMPUTED = "sigma has not been computed, vis-a-vis Jimenez-algorithm.";
+	public final String ERROR_OVERCOMPUTING_VARIANCE = "Why are you calculating square-root-of-variance more than one time?"; 
+	
 	
 
 	public CountStep(String dir) throws Exception {
 		
 		windowSize = DEFAULT_WINDOW_SIZE;
+		haveCalculatedSquareRootOfVariance = false;
 		
 		groundTruth = new ArrayList<ArrayList<Double>>();
 		withLowerThreshold = new ArrayList<Double>();
+		squareRootsOfVariance = new ArrayList<Double>();
+		
 		BufferedReader br = null;
 		String line = "";
 		String separator = ",";
@@ -151,13 +160,36 @@ public class CountStep {
 		result = sum / divisor;
 		return result;
 	}
-
-	public void applyLowerThreshold(Double givenLowerThreshold) {
+	
+	public void calculateSquareRootOfVariance() throws Exception {
+		
+		if (haveCalculatedSquareRootOfVariance) {
+			throw new Exception(ERROR_OVERCOMPUTING_VARIANCE ); // TODO write a test that enters this conditional
+		}
 		Double variance;
 		Double squareRootOfVariance;
+
 		for (int k=0; k<this.groundTruth.size(); k++) {
 			variance = this.calculateLocalVariance(k);
 			squareRootOfVariance = Math.sqrt(variance);
+			this.squareRootsOfVariance.add(squareRootOfVariance);
+		}
+
+
+		haveCalculatedSquareRootOfVariance = true;
+
+		
+	}
+
+	public void applyLowerThreshold(Double givenLowerThreshold) throws Exception {
+		if (!haveCalculatedSquareRootOfVariance) {
+		    throw new Exception(ERROR_VARIANCE_NOT_COMPUTED);
+		}
+		Double squareRootOfVariance;
+		for (int k=0; k<this.groundTruth.size(); k++) {
+			 
+			squareRootOfVariance = squareRootsOfVariance.get(k);
+			
 			if (squareRootOfVariance<givenLowerThreshold) {
 				this.withLowerThreshold.add(givenLowerThreshold);
 			} else {
