@@ -164,7 +164,7 @@ public class CountStep {
 	public void calculateSquareRootOfVariance() throws Exception {
 		
 		if (haveCalculatedSquareRootOfVariance) {
-			throw new Exception(ERROR_OVERCOMPUTING_VARIANCE ); // TODO write a test that enters this conditional
+			throw new Exception(ERROR_OVERCOMPUTING_VARIANCE );
 		}
 		Double variance;
 		Double squareRootOfVariance;
