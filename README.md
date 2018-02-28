@@ -1,2 +1,9 @@
-# counting-with-jimenez
-Implementing an algorithm that is elaborated in the following paper: (A. R. Jiménez et al. 'A Comparison of Pedestrian Dead-Reckoning Algorithms using a Low-Cost MEMS IMU'. Related to 6th IEEE International Symposium on Intelligent Signal Processing. The year 2009.)
+### To compile and run the program, on a *nix system
+
+I assume you have the executables java and javac
+
+1. navigate to the directory that has CountStep.java
+
+1. run the command: javac -d . CountStep.java
+
+2. run: java ZerothPackage.CountStep
