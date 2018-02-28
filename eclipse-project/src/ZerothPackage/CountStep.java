@@ -17,7 +17,7 @@ public class CountStep {
 	private boolean haveCalculatedSquareRootOfVariance;
 	
 	private final int DEFAULT_WINDOW_SIZE = 15;
-	private final Double NOT_A_VALUE = -1.0;
+	private final Double NOT_A_VALUE = Double.NaN;
 	
 	public final String ERROR_VARIANCE_NOT_COMPUTED = "sigma has not been computed, vis-a-vis Jimenez-algorithm.";
 	public final String ERROR_OVERCOMPUTING_VARIANCE = "Why are you calculating square-root-of-variance more than one time?";
@@ -268,16 +268,24 @@ public class CountStep {
 		}
 		Iterator<Integer> that = transitionsFromHighToLow.iterator();
 		int indexOfPossibleStep;
+		boolean hasReachedEndOfWindow = false;
 		while (that.hasNext()) {
 			indexOfPossibleStep = that.next();
-			int indexAtEndOfWindow = indexOfPossibleStep + this.windowSize; 
-			for (int k = indexOfPossibleStep; k < indexAtEndOfWindow; k++) {
+			int indexAtEndOfWindow = indexOfPossibleStep + this.windowSize;
+			
+			for (int k = indexOfPossibleStep; k <= indexAtEndOfWindow; k++) {
 				if (k > this.withLowerThreshold.size() - 1) {
 					break;
 				} else if (withLowerThreshold.get(k) > this.lowerThreshold) {
 					break;
 				} else if (withLowerThreshold.get(k) == this.lowerThreshold){
-					result++;
+					if (k==indexAtEndOfWindow) {
+						hasReachedEndOfWindow = true;
+					}
+					if (hasReachedEndOfWindow) {
+						result++;
+					}
+					
 				} else {
 					// TODO i don't know what to do.
 				}

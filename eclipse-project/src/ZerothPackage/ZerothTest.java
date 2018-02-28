@@ -13,8 +13,8 @@ class ZerothTest {
 
 	private String dirOfSampleCSV = "C:\\Users\\pheng\\Documents\\cs4222 wireless networks\\CS4222-HW2\\sample-from-pdf.csv";
 	private String dir2 = "C:\\Users\\pheng\\Documents\\cs4222 wireless networks\\CS4222-HW2\\sample2.csv";
-	private String dir3 = "C:\\Users\\pheng\\git\\counting-gitlab\\data\\22_accel_data_m.csv";
-	// private String dir3 = "C:\\Users\\pheng\\git\\counting-gitlab\\data\\22_accel_data_fixed.csv";
+	// private String dir3 = "C:\\Users\\pheng\\git\\counting-gitlab\\data\\22_accel_data_m.csv";
+    private String dir3 = "C:\\Users\\pheng\\git\\counting-gitlab\\data\\22_accel_data_fixed.csv";
 	private Double expectedVal = 2.06;
 	private int expectedAlpha = 5; // alpha is label for the 'vertical' axis of the 2-d array
 	private int expectedBeta = 1; // beta, that for the 'horizontal' axis;
