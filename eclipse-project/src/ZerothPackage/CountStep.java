@@ -1,7 +1,5 @@
 package ZerothPackage;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -79,7 +77,7 @@ public class CountStep {
 			c3.applyUpperThreshold(givenUpperThreshold);
 
 		} catch (Exception e) {
-			fail(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		int result = c3.countSteps();
 		System.out.print(result);
