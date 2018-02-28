@@ -80,7 +80,7 @@ public class CountStep {
 			System.out.println(e.getMessage());
 		}
 		int result = c3.countSteps();
-		System.out.print(result);
+		System.out.println(result);
 	}
 	
 	public ArrayList<ArrayList<Double>> getGroundTruth() throws Exception {
