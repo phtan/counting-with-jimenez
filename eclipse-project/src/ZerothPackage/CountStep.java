@@ -4,23 +4,25 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CountStep {
 	
 	private ArrayList<ArrayList<Double>> groundTruth;
 	private ArrayList<Double> squareRootsOfVariance;
 	private ArrayList<Double> withLowerThreshold;
+	private ArrayList<Double> withUpperThreshold;
 	private int windowSize;
 	
 	private boolean haveCalculatedSquareRootOfVariance;
 	
 	private final int DEFAULT_WINDOW_SIZE = 15;
+	private final Double NOT_A_VALUE = -1.0;
 	
 	public final String ERROR_VARIANCE_NOT_COMPUTED = "sigma has not been computed, vis-a-vis Jimenez-algorithm.";
-	public final String ERROR_OVERCOMPUTING_VARIANCE = "Why are you calculating square-root-of-variance more than one time?"; 
+	public final String ERROR_OVERCOMPUTING_VARIANCE = "Why are you calculating square-root-of-variance more than one time?";
+	public Double lowerThreshold;
 	
-	
-
 	public CountStep(String dir) throws Exception {
 		
 		windowSize = DEFAULT_WINDOW_SIZE;
@@ -28,6 +30,7 @@ public class CountStep {
 		
 		groundTruth = new ArrayList<ArrayList<Double>>();
 		withLowerThreshold = new ArrayList<Double>();
+		withUpperThreshold = new ArrayList<Double>();
 		squareRootsOfVariance = new ArrayList<Double>();
 		
 		BufferedReader br = null;
@@ -178,7 +181,6 @@ public class CountStep {
 
 		haveCalculatedSquareRootOfVariance = true;
 
-		
 	}
 
 	public void applyLowerThreshold(Double givenLowerThreshold) throws Exception {
@@ -186,6 +188,7 @@ public class CountStep {
 		    throw new Exception(ERROR_VARIANCE_NOT_COMPUTED);
 		}
 		Double squareRootOfVariance;
+		this.lowerThreshold = givenLowerThreshold;
 		for (int k=0; k<this.groundTruth.size(); k++) {
 			 
 			squareRootOfVariance = squareRootsOfVariance.get(k);
@@ -193,7 +196,7 @@ public class CountStep {
 			if (squareRootOfVariance<givenLowerThreshold) {
 				this.withLowerThreshold.add(givenLowerThreshold);
 			} else {
-				this.withLowerThreshold.add(squareRootOfVariance);
+				this.withLowerThreshold.add(NOT_A_VALUE);
 			}
 		}
 		
@@ -202,6 +205,63 @@ public class CountStep {
 	public ArrayList<Double> getLowerThresholds() {
 	
 		return withLowerThreshold;
+	}
+
+	public void applyUpperThreshold(Double givenUpperThreshold) throws Exception {
+		if (!haveCalculatedSquareRootOfVariance) {
+		    throw new Exception(ERROR_VARIANCE_NOT_COMPUTED);
+		}
+		Double squareRootOfVariance;
+		Double zeroOtherwiseAsWrittenInAlgorithm = 0.0;
+		for (int k=0; k<this.groundTruth.size(); k++) {
+			 
+			squareRootOfVariance = squareRootsOfVariance.get(k);
+			
+			if (squareRootOfVariance>givenUpperThreshold) {
+				this.withUpperThreshold.add(givenUpperThreshold);
+			} else {
+				this.withUpperThreshold.add(zeroOtherwiseAsWrittenInAlgorithm);
+			}
+		}
+		
+	}
+
+	public int countSteps() {
+		// TODO test that exceptions get thrown if upper and lower thresholds have not been computed.
+		ArrayList<Integer> transitionsFromHighToLow = new ArrayList<>();
+		
+		int result = 0;
+		for (int n=0; n<withUpperThreshold.size()-1; n++) {
+			if (n + 1 == withUpperThreshold.size()) { // we want the (n+1)th element to still be within the bounds of the list
+				continue;
+			}
+			Double whatsNext = withUpperThreshold.get(n);
+			Double whatsAfterIt = withUpperThreshold.get(n+1); // look to the next value
+
+			if (whatsAfterIt < whatsNext) { // ideally, whatsAfterIt would be 0, and whatsNext 1
+				transitionsFromHighToLow.add(n); // we want to track the index of these, since they 'point' to a possible step, vis-a-vis Jimenez algorithm.
+			}
+
+
+		}
+		Iterator<Integer> that = transitionsFromHighToLow.iterator();
+		int indexOfPossibleStep;
+		while (that.hasNext()) {
+			indexOfPossibleStep = that.next();
+			int indexAtEndOfWindow = indexOfPossibleStep + this.windowSize; 
+			for (int k = indexOfPossibleStep; k < indexAtEndOfWindow; k++) {
+				if (k > this.withLowerThreshold.size() - 1) {
+					break;
+				} else if (withLowerThreshold.get(k) > this.lowerThreshold) {
+					break;
+				} else if (withLowerThreshold.get(k) == this.lowerThreshold){
+					result++;
+				} else {
+					// TODO i don't know what to do.
+				}
+			}
+		}
+		return result;
 	}
 
 }

@@ -13,18 +13,21 @@ class ZerothTest {
 
 	private String dirOfSampleCSV = "C:\\Users\\pheng\\Documents\\cs4222 wireless networks\\CS4222-HW2\\sample-from-pdf.csv";
 	private String dir2 = "C:\\Users\\pheng\\Documents\\cs4222 wireless networks\\CS4222-HW2\\sample2.csv";
+	private String dir3 = "C:\\Users\\pheng\\git\\counting-gitlab\\data\\22_accel_data_m.csv";
+	// private String dir3 = "C:\\Users\\pheng\\git\\counting-gitlab\\data\\22_accel_data_fixed.csv";
 	private Double expectedVal = 2.06;
 	private int expectedAlpha = 5; // alpha is label for the 'vertical' axis of the 2-d array
 	private int expectedBeta = 1; // beta, that for the 'horizontal' axis;
 	private CountStep c;
 	private CountStep c2;
+	private CountStep c3;
 	
 	@BeforeEach
 	public void setUp() {
 		try {
 			this.c = new CountStep(dirOfSampleCSV);
 			this.c2 = new CountStep(dir2);
-	
+			this.c3 = new CountStep(dir3);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			fail(e1.getMessage());
@@ -106,6 +109,19 @@ class ZerothTest {
 		}
 		
 	}
+	@Test
+	public void lowerThresholdIsSet() {
+		Double arbitrary = 99.99;
+		try {
+			c2.calculateSquareRootOfVariance();
+			c2.applyLowerThreshold(arbitrary);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+		String expected = Double.toString(arbitrary);
+		String actual = Double.toString(c2.lowerThreshold);
+		assertEquals(expected, actual);
+	}
 	
 	@Test
 	public void testLowerThreshold() {
@@ -137,8 +153,46 @@ class ZerothTest {
 		}
 	}
 	
+	
 	@Test
-	public void testUpperThreshold() {
-		fail("Not implemented yet.");
+	public void testAccuracy() {
+		Double givenLowerThreshold = 1.0;
+		Double givenUpperThreshold = 2.0;
+		int permissibleError = 7; // how much the computed number of steps can differ from the ground truth
+		int actualNumberOfSteps = 110;
+		try {
+			c3.calculateSquareRootOfVariance();
+			c3.applyLowerThreshold(givenLowerThreshold);
+			c3.applyUpperThreshold(givenUpperThreshold);
+			
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+		int result = c3.countSteps();
+		
+		
+		int error = actualNumberOfSteps - result;
+		int errorSquared = error * error; //  remove negative signs if any
+		int permissibleErrorSquared = permissibleError * permissibleError;
+		
+				
+		if (errorSquared > permissibleErrorSquared) {
+
+			String failMessage = "The computed number of steps "
+			    + Integer.toString(result)
+			    + " differed too much from the actual number of steps "
+			    + Integer.toString(actualNumberOfSteps)
+			    + "; expected error of "
+			    + Integer.toString(permissibleError)
+			    + " but actual error was "
+			    + Integer.toString(error);
+			fail(failMessage);
+		}
+		
+		String successMessage = "I computed the number of steps to be "
+			    + Integer.toString(result);
+		
+		System.out.println(successMessage);
 	}
+
 }
