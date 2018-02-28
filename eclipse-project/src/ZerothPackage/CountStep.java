@@ -1,5 +1,7 @@
 package ZerothPackage;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -57,8 +59,30 @@ public class CountStep {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		int expectedNumberOfArguments = 1;
+		if (args.length != expectedNumberOfArguments) {
+			String msg = "expected " + expectedNumberOfArguments 
+					+ " number of arguments but received "
+					+ args.length
+					+ " number of arguments.";
+			System.out.println(msg);
+		}
+		String userDir = args[0];
+		
+		Double givenLowerThreshold = 1.0;
+		Double givenUpperThreshold = 2.0;
+		CountStep c3 = null;
+		try {
+			c3 = new CountStep(userDir);
+			c3.calculateSquareRootOfVariance();
+			c3.applyLowerThreshold(givenLowerThreshold);
+			c3.applyUpperThreshold(givenUpperThreshold);
 
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+		int result = c3.countSteps();
+		System.out.print(result);
 	}
 	
 	public ArrayList<ArrayList<Double>> getGroundTruth() throws Exception {
