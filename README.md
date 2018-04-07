@@ -48,5 +48,4 @@ has been included with this program.
 
 ### Reference(s)
 
-- A. R. Jiménez et al. The year 2009. 'A Comparison of Pedestrian Dead-Reckoning Algorithms using a Low-Cost MEMS IMU'. Related to 6th IEEE International Symposium on Intelligent Signal Processing. 
-(A. R. Jiménez et al. 'A Comparison of Pedestrian Dead-Reckoning Algorithms using a Low-Cost MEMS IMU'. Related to 6th IEEE International Symposium on Intelligent Signal Processing. The year 2009.)
+- A. R. Jiménez et al. The year 2009. 'A comparison of pedestrian dead-reckoning algorithms using a low-cost MEMS IMU'. Related to 6th IEEE International Symposium on Intelligent Signal Processing. 
