@@ -1,6 +1,6 @@
 ### Abstract
 
-Suppose I want to count the number of steps I have taken.
+Suppose I want an estimate of the number of steps I have taken.
 I have an accelerometer so I can have data on changes in acceleration over time.
 Given such data, how might I estimate the number of steps I have taken while
 the data was being collected?
