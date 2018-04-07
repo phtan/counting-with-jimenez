@@ -4,7 +4,7 @@ Suppose I want an estimate of the number of steps I have taken.
 I have an accelerometer so I can have data on changes in acceleration over time.
 Given such data, how might I estimate the number of steps I have taken while
 the data was being collected?
-We attempt to solve such a problem. We implement an algorithm by Jimenez et al. (2009).
+We attempt to solve such a challenge. We implement an algorithm by Jimenez et al. (2009).
 
 ### Input
 
