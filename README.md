@@ -45,3 +45,8 @@ Let `path/to/csv` represent the location of the CSV-file (ie. input).
 
 All may obtain a copy of this program, under the MIT licence. A copy of the licence
 has been included with this program.
+
+### Reference(s)
+
+- A. R. Jiménez et al. The year 2009. 'A Comparison of Pedestrian Dead-Reckoning Algorithms using a Low-Cost MEMS IMU'. Related to 6th IEEE International Symposium on Intelligent Signal Processing. 
+(A. R. Jiménez et al. 'A Comparison of Pedestrian Dead-Reckoning Algorithms using a Low-Cost MEMS IMU'. Related to 6th IEEE International Symposium on Intelligent Signal Processing. The year 2009.)
