@@ -32,8 +32,10 @@ were collected from the accelerometer.
 
 I provide instructions to compile and run the program, on a *nix system.
 
-I assume you have the executables *java* and *javac*.
+I assume you have the executables *git*, *java* and *javac*.
 Let `path/to/csv` represent the location of the CSV-file (ie. input).
+
+1. Obtain a copy of the program. For example, on your computer, you can run the following command: git clone https://gitlab.com/phtan/counting-with-jimenez.git
 
 1. navigate to the directory that has CountStep.java
 
