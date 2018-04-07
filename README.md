@@ -2,15 +2,16 @@
 
 Suppose I want to count the number of steps I have taken.
 I have an accelerometer so I can have data on changes in acceleration over time.
-Given such data, how might I count the number of steps I have taken while
+Given such data, how might I estimate the number of steps I have taken while
 the data was being collected?
 We attempt to solve such a problem. We implement an algorithm by Jimenez et al. (2009).
 
 ### Input
 
 The expected input is a CSV (Comma-separated values) file.
-Semantically speaking, the file contains readings from an accelerometer,
-in the x-axis, y-axis and z-axis.
+Semantically speaking, the file contains readings from an accelerometer.
+Each line in the file corresponds to a set of three readings, one each in the 
+x-axis, y-axis and z-axis.
 
 The following is an example of a CSV file with 5 sets of readings:
 
@@ -25,7 +26,7 @@ The following is an example of a CSV file with 5 sets of readings:
 ### Output
 
 The expected output of the program is an estimate of the number of steps
-(as in walking, running, and so on) that have been taken while readings
+(as in walking) that have been taken while readings
 were collected from the accelerometer.
 
 ### Usage
